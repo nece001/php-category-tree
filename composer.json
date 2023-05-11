@@ -1,0 +1,20 @@
+{
+    "name": "nece001/php-category-tree",
+    "description": "php 无限级分类树",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nece001\\PhpCategoryTree\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "nece001",
+            "email": "nece001@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.2"
+    }
+}
