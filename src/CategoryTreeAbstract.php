@@ -164,13 +164,11 @@ abstract class CategoryTreeAbstract
      */
     protected function buildNextNodeNo($current_max_node_no)
     {
-        $left = '';
         $next = 1;
         if ($current_max_node_no) {
             $length = strlen($current_max_node_no);
             $pos = $length > $this->node_length ? $length - $this->node_length : 0;
             $next = intval(substr($current_max_node_no, $pos)) + 1;
-            $left = substr($current_max_node_no, 0, $pos);
         }
         $right = $this->buildNodeNo($next);
 
@@ -251,16 +249,20 @@ abstract class CategoryTreeAbstract
 
             $items[] = $model;
             if (!$this->childListIsEmpty($childs)) {
+                $old_parent_node_no_length = strlen($old_parent_node_no);
+                $old_parent_path_length = strlen($old_parent_path);
                 foreach ($childs as $child) {
 
-                    // 替换序号父级部分
-                    $node_no = str_replace($old_parent_node_no, $model[$this->field_node_no], $child[$this->field_node_no]);
-                    $node_path = str_replace($old_parent_path, $model[$this->field_node_path], $child[$this->field_node_path]);
+                    if ($model[$this->field_id] != $child[$this->field_id]) {
+                        // 替换序号父级部分
+                        $node_no = substr_replace($child[$this->field_node_no], $model[$this->field_node_no], 0, $old_parent_node_no_length);
+                        $node_path = substr_replace($child[$this->field_node_path], $model[$this->field_node_path], 0, $old_parent_path_length);
 
-                    $child[$this->field_node_no] = $node_no;
-                    $child[$this->field_node_path] = $node_path;
+                        $child[$this->field_node_no] = $node_no;
+                        $child[$this->field_node_path] = $node_path;
 
-                    $items[] = $child;
+                        $items[] = $child;
+                    }
                 }
             }
         }
@@ -279,7 +281,7 @@ abstract class CategoryTreeAbstract
      *
      * @return array 所有要更新的节点数组
      */
-    protected function move($id, $up = true)
+    protected function exchangeNodeNo($id, $up = true)
     {
         $items = array();
         $node = $this->getById($id);
@@ -301,18 +303,23 @@ abstract class CategoryTreeAbstract
                 $childs1 = $this->getAllChildsByParentNodeNo($old_node_no);
                 $childs2 = $this->getAllChildsByParentNodeNo($old_sibling_no);
 
-                $current_max_node_no = $old_sibling_no . $this->buildNodeNo(0);
                 if (!$this->childListIsEmpty($childs1)) {
+                    $old_node_no_length = strlen($old_node_no);
                     foreach ($childs1 as $child) {
-                        $child[$this->field_node_no] = $this->buildNextNodeNo($current_max_node_no);
+
+                        // 替换序号父级部分
+                        $node_no = substr_replace($child[$this->field_node_no], $old_sibling_no, 0, $old_node_no_length);
+                        $child[$this->field_node_no] = $node_no;
                         $items[] = $child;
                     }
                 }
 
-                $current_max_node_no = $old_node_no . $this->buildNodeNo(0);
                 if (!$this->childListIsEmpty($childs2)) {
+                    $old_sibling_no_length = strlen($old_sibling_no);
                     foreach ($childs2 as $child) {
-                        $child[$this->field_node_no] = $this->buildNextNodeNo($current_max_node_no);
+                        // 替换序号父级部分
+                        $node_no = substr_replace($child[$this->field_node_no], $old_node_no, 0, $old_sibling_no_length);
+                        $child[$this->field_node_no] = $node_no;
                         $items[] = $child;
                     }
                 }
