@@ -30,6 +30,10 @@ class CategoryTest
         $c->moveUp(3);
         echo '2.移动后的结果', PHP_EOL;
         printTable($c->getData());
+
+        $c->moveDown(4);
+        echo '3.移动后的结果', PHP_EOL;
+        printTable($c->getData());
     }
 }
 

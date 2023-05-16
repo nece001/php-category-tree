@@ -40,6 +40,14 @@ class Category extends CategoryTreeAbstract
         }
     }
 
+    public function moveDown($id)
+    {
+        $items = $this->exchangeNodeNo($id, false);
+        foreach ($items as $item) {
+            $this->data[$item['id']] = $item;
+        }
+    }
+
 
 
 
