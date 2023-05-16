@@ -8,7 +8,7 @@ namespace Nece001\PhpCategoryTree;
  * @Author nece001@163.com
  * @DateTime 2023-05-11
  */
-abstract class CatetoryTreeAbstract
+abstract class CategoryTreeAbstract
 {
     /**
      * 序号单节的长度
@@ -173,7 +173,8 @@ abstract class CatetoryTreeAbstract
             $left = substr($current_max_node_no, 0, $pos);
         }
         $right = $this->buildNodeNo($next);
-        return $left . $right;
+
+        return $right;
     }
 
     /**
@@ -197,11 +198,12 @@ abstract class CatetoryTreeAbstract
             'node_path' => ($parent && isset($parent[$this->field_node_path])) ? $parent[$this->field_node_path] : '',
         );
 
-        $next_node_no = $this->buildNextNodeNo($current_max_node_no);
+        $next_node_no = $parent_node['node_no'] . $this->buildNextNodeNo($current_max_node_no);
+        $parent_id = isset($parent[$this->field_id]) ? $parent[$this->field_id] : 0;
 
         $model[$this->field_parent_id] = $parent_node['id'];
         $model[$this->field_node_no] = $next_node_no;
-        $model[$this->field_node_path] = ($parent_node['node_path'] != '' ? $parent_node['node_path'] . ',' : '') . $parent[$this->field_id];
+        $model[$this->field_node_path] = ($parent_node['node_path'] != '' ? $parent_node['node_path'] . ',' : '') . $parent_id;
         $model[$this->field_node_level] = $parent_node['node_level'] + 1;
 
         return $model;
@@ -240,17 +242,24 @@ abstract class CatetoryTreeAbstract
         $items = array();
         if ($is_parent_changed) {
             $parent = $this->getById($model[$this->field_parent_id]);
-            $childs = $this->getAllChildsByParentNodeNo($parent[$this->field_node_no]);
+            $childs = $this->getAllChildsByParentNodeNo($model[$this->field_node_no]);
 
-            $current_max_node_no = $this->getChildMaxNoOfParent($model[$this->field_parent_id]);
+            $old_parent_node_no = $model[$this->field_node_no];
+            $old_parent_path = $model[$this->field_node_path];
+            $current_max_node_no = $this->getChildMaxNoOfParent($parent[$this->field_id]);
             $model = $this->appendNodeValue($model, $parent, $current_max_node_no);
+
             $items[] = $model;
             if (!$this->childListIsEmpty($childs)) {
-                $current_max_node_no = $current_max_node_no . $this->buildNodeNo(0);
-
                 foreach ($childs as $child) {
-                    $child = $this->appendNodeValue($child, $model, $current_max_node_no);
-                    $current_max_node_no = $child[$this->field_node_no];
+
+                    // 替换序号父级部分
+                    $node_no = str_replace($old_parent_node_no, $model[$this->field_node_no], $child[$this->field_node_no]);
+                    $node_path = str_replace($old_parent_path, $model[$this->field_node_path], $child[$this->field_node_path]);
+
+                    $child[$this->field_node_no] = $node_no;
+                    $child[$this->field_node_path] = $node_path;
+
                     $items[] = $child;
                 }
             }
