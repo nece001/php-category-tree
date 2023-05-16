@@ -16,8 +16,8 @@ class Category extends CategoryTreeAbstract
     public function create($parent_id)
     {
         $this->addItem($parent_id);
-        // $this->addItem($parent_id);
-        // $this->addItem($parent_id);
+        $this->addItem($parent_id);
+        $this->addItem($parent_id);
     }
 
     public function update($id, $parent_id)
@@ -27,6 +27,14 @@ class Category extends CategoryTreeAbstract
         $row['parent_id'] = $parent_id;
         $items = $this->updateNode($row, true);
 
+        foreach ($items as $item) {
+            $this->data[$item['id']] = $item;
+        }
+    }
+
+    public function moveUp($id)
+    {
+        $items = $this->exchangeNodeNo($id);
         foreach ($items as $item) {
             $this->data[$item['id']] = $item;
         }
@@ -63,7 +71,7 @@ class Category extends CategoryTreeAbstract
     {
         $data = array();
         foreach ($this->data as $row) {
-            if (false !== strpos($row['node_no'], $node_no)) {
+            if (0 === strpos($row['node_no'], $node_no)) {
                 $data[] = $row;
             }
         }
