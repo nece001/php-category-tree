@@ -225,7 +225,7 @@ abstract class CategoryTreeAbstract
     }
 
     /**
-     * 更新节点（节点父级有变动时，边同子级节点数据一起更新）
+     * 更新节点（节点父级有变动时，子级节点数据一起更新）
      *
      * @Author nece001@163.com
      * @DateTime 2023-05-11
