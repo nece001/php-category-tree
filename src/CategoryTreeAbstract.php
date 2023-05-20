@@ -242,9 +242,11 @@ abstract class CategoryTreeAbstract
             $parent = $this->getById($model[$this->field_parent_id]);
             $childs = $this->getAllChildsByParentNodeNo($model[$this->field_node_no]);
 
+			$parent_id = $parent ? $parent[$this->field_id] : 0;
+
             $old_parent_node_no = $model[$this->field_node_no];
             $old_parent_path = $model[$this->field_node_path];
-            $current_max_node_no = $this->getChildMaxNoOfParent($parent[$this->field_id]);
+            $current_max_node_no = $this->getChildMaxNoOfParent($parent_id);
             $model = $this->appendNodeValue($model, $parent, $current_max_node_no);
 
             $items[] = $model;
