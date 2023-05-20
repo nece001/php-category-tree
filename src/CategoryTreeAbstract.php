@@ -217,7 +217,7 @@ abstract class CategoryTreeAbstract
      *
      * @return \ArrayAccess
      */
-    protected function crreateNode($model)
+    protected function createNode($model)
     {
         $parent = $this->getById($model[$this->field_parent_id]);
         $current_max_node_no = $this->getChildMaxNoOfParent($model[$this->field_parent_id]);

@@ -168,7 +168,7 @@ class Category extends CategoryTreeAbstract
         $count = count($this->data);
         $id = $count + 1;
         $row = $this->buildItem($id, $parent_id);
-        $this->data[$id] = $this->crreateNode($row);
+        $this->data[$id] = $this->createNode($row);
     }
 
     private function buildItem($id, $parent_id)
