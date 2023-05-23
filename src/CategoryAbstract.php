@@ -3,12 +3,12 @@
 namespace Nece001\PhpCategoryTree;
 
 /**
- * ThinkPHP的分类树抽象逻辑类
+ * 使用ORM Model分类树抽象逻辑类
  *
  * @Author gjw
  * @DateTime 2023-05-20
  */
-abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
+abstract class CategoryAbstract extends CategoryTreeAbstract
 {
     /**
      * 创建Model
@@ -16,7 +16,7 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      * @Author gjw
      * @DateTime 2023-05-20
      *
-     * @return \think\model
+     * @return \Nece001\PhpOrmModel\Interfaces\Model
      */
     abstract public function createModel();
 
@@ -28,7 +28,7 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      * @Author gjw
      * @DateTime 2023-05-20
      *
-     * @return \think\model
+     * @return \Nece001\PhpOrmModel\Interfaces\Model
      */
     protected function getModel()
     {
@@ -44,9 +44,9 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      * @Author gjw
      * @DateTime 2023-05-20
      *
-     * @param \think\model $item
+     * @param \Nece001\PhpOrmModel\Interfaces\Model $item
      *
-     * @return \think\model
+     * @return \Nece001\PhpOrmModel\Interfaces\Model
      */
     protected function saveCreateItem($item)
     {
@@ -60,7 +60,7 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      * @Author gjw
      * @DateTime 2023-05-20
      *
-     * @param \think\model $item 传过来的节点应该保持原父级ID
+     * @param \Nece001\PhpOrmModel\Interfaces\Model $item 传过来的节点应该保持原父级ID
      * @param integer $parent_id 新父级ID（更换父级的情况）或原父级ID
      *
      * @return void
@@ -106,7 +106,7 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      *
      * @param int $id
      *
-     * @return \think\model
+     * @return \Nece001\PhpOrmModel\Interfaces\Model
      */
     public function getById($id)
     {
@@ -139,7 +139,7 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      *
      * @param int $id
      *
-     * @return \think\model
+     * @return \Nece001\PhpOrmModel\Interfaces\Model
      */
     protected function getPreviousSibling($id)
     {
@@ -157,7 +157,7 @@ abstract class ThinkPhpCategoryAbstract extends CategoryTreeAbstract
      *
      * @param int $id
      *
-     * @return \think\model
+     * @return \Nece001\PhpOrmModel\Interfaces\Model
      */
     protected function getNextSibling($id)
     {
