@@ -72,7 +72,7 @@ abstract class CategoryTreeAbstract
      *
      * @param int $id
      *
-     * @return \ArrayAccess
+     * @return array
      */
     abstract public function getById($id);
 
@@ -84,7 +84,7 @@ abstract class CategoryTreeAbstract
      *
      * @param string $node_no
      *
-     * @return \Iterator
+     * @return array
      */
     abstract public function getAllChildsByParentNodeNo($node_no);
 
@@ -97,7 +97,7 @@ abstract class CategoryTreeAbstract
      *
      * @param int $id
      *
-     * @return \ArrayAccess
+     * @return array
      */
     abstract protected function getPreviousSibling($id);
 
@@ -109,7 +109,7 @@ abstract class CategoryTreeAbstract
      *
      * @param int $id
      *
-     * @return \ArrayAccess
+     * @return array
      */
     abstract protected function getNextSibling($id);
 
@@ -131,7 +131,7 @@ abstract class CategoryTreeAbstract
      * @Author nece001@163.com
      * @DateTime 2023-05-11
      *
-     * @param \Iterator $list
+     * @param array $list
      *
      * @return bool
      */
@@ -181,11 +181,11 @@ abstract class CategoryTreeAbstract
      * @Author nece001@163.com
      * @DateTime 2023-05-11
      *
-     * @param \ArrayAccess $model
-     * @param \ArrayAccess $parent
+     * @param array $model
+     * @param array $parent
      * @param string $current_max_node_no
      *
-     * @return \ArrayAccess
+     * @return array
      */
     protected function appendNodeValue($model, $parent, $current_max_node_no)
     {
@@ -213,9 +213,9 @@ abstract class CategoryTreeAbstract
      * @Author nece001@163.com
      * @DateTime 2023-05-11
      *
-     * @param \ArrayAccess $model
+     * @param array $model
      *
-     * @return \ArrayAccess
+     * @return array
      */
     protected function createNode($model)
     {
@@ -230,7 +230,7 @@ abstract class CategoryTreeAbstract
      * @Author nece001@163.com
      * @DateTime 2023-05-11
      *
-     * @param \ArrayAccess $model
+     * @param array $model
      * @param bool $is_parent_changed
      *
      * @return array 所有要更新的节点数组
