@@ -6,7 +6,6 @@ use Throwable;
 
 abstract class LeftRightTp6 extends LeftRightAbstract
 {
-
     protected function getModel()
     {
         static $model = null;
@@ -50,33 +49,28 @@ abstract class LeftRightTp6 extends LeftRightAbstract
         return $this->getModel()->where('id', $id)->find();
     }
 
-    public function create($catalog)
+    public function create($parent_id, $title)
     {
         $this->startTrans();
         try {
-            $item = $this->createNode($catalog->parent_id);
-            $item->title = $catalog->title;
+            $item = $this->createNode($parent_id);
+            $item->title = $title;
             $item->save();
-
-            $catalog->id = $item->id;
             $this->commit();
-
-            return $catalog->id;
+            return $item->id;
         } catch (Throwable $e) {
             $this->rollback();
             throw $e;
         }
     }
 
-    public function update($catalog)
+    public function update($id, $parent_id)
     {
         $this->startTrans();
         try {
-            $item = $this->updateNode($catalog->id, $catalog->parent_id);
-
+            $item = $this->updateNode($id, $parent_id);
             $data = array(
-                'parent_id' => $catalog->parent_id,
-                'title' => $catalog->title,
+                'parent_id' => $parent_id,
             );
 
             $item->save($data);
@@ -118,7 +112,7 @@ abstract class LeftRightTp6 extends LeftRightAbstract
         if ($item) {
 
             if (!$force) {
-                $count = $this->getModel()->where('parent_id', $item->parent_id)->count();
+                $count = $this->getModel()->where('parent_id', $item->id)->count();
                 if ($count) {
                     throw new \Exception('has child!');
                 }
@@ -279,7 +273,7 @@ abstract class LeftRightTp6 extends LeftRightAbstract
         return $items;
     }
 
-    protected function listQuery()
+    public function listQuery()
     {
         $query = $this->getModel()
             ->field(array('node.*', '(COUNT(parent.id) - 1) as depth'))
