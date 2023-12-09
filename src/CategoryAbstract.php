@@ -5,7 +5,7 @@ namespace Nece001\PhpCategoryTree;
 /**
  * 使用ORM Model分类树抽象逻辑类
  *
- * @Author gjw
+ * @author nece001@163.com
  * @DateTime 2023-05-20
  */
 abstract class CategoryAbstract extends CategoryTreeAbstract
@@ -13,7 +13,7 @@ abstract class CategoryAbstract extends CategoryTreeAbstract
     /**
      * 创建Model
      *
-     * @Author gjw
+     * @author nece001@163.com
      * @DateTime 2023-05-20
      *
      * @return \Nece001\PhpOrmModel\Interfaces\Model
@@ -25,7 +25,7 @@ abstract class CategoryAbstract extends CategoryTreeAbstract
     /**
      * 获取Model实例（用于查询）
      *
-     * @Author gjw
+     * @author nece001@163.com
      * @DateTime 2023-05-20
      *
      * @return \Nece001\PhpOrmModel\Interfaces\Model
@@ -41,7 +41,7 @@ abstract class CategoryAbstract extends CategoryTreeAbstract
     /**
      * 保存新创建的节点
      *
-     * @Author gjw
+     * @author nece001@163.com
      * @DateTime 2023-05-20
      *
      * @param \Nece001\PhpOrmModel\Interfaces\Model $item
@@ -57,7 +57,7 @@ abstract class CategoryAbstract extends CategoryTreeAbstract
     /**
      * 保存更新的节点
      *
-     * @Author gjw
+     * @author nece001@163.com
      * @DateTime 2023-05-20
      *
      * @param \Nece001\PhpOrmModel\Interfaces\Model $item 传过来的节点应该保持原父级ID
@@ -81,7 +81,7 @@ abstract class CategoryAbstract extends CategoryTreeAbstract
     /**
      * 交换位置
      *
-     * @Author gjw
+     * @author nece001@163.com
      * @DateTime 2023-05-20
      *
      * @param int $id
