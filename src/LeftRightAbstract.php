@@ -23,4 +23,18 @@ abstract class LeftRightAbstract
         }
         return $model;
     }
+
+    public function toTree($items)
+    {
+        $depth = array();
+        foreach ($items as $item) {
+            $item->depth = 0;
+            if (isset($depth[$item->parent_id])) {
+                $item->depth = $depth[$item->parent_id] + 1;
+            }
+
+            $depth[$item->id] = $item->depth;
+        }
+        return $items;
+    }
 }

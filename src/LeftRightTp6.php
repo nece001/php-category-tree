@@ -259,16 +259,10 @@ abstract class LeftRightTp6 extends LeftRightAbstract
             $parent = $this->getById($root_parent_id);
             $query->where('left', '>=', $parent->left)->where('right', '<=', $parent->right);
         }
-
-        $depth = array();
+        
         $items = $query->select();
-        foreach ($items as $item) {
-            $item->depth = 0;
-            if (isset($depth[$item->parent_id])) {
-                $item->depth = $depth[$item->parent_id] + 1;
-            }
-
-            $depth[$item->id] = $item->depth;
+        if (!$items->isEmpty()) {
+            return $this->toTree($items);
         }
         return $items;
     }
